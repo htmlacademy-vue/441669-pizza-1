@@ -24,10 +24,6 @@
   @include center_template(50%, 0);
 }
 
-//////////////////////////
-///  position: fixed;  ///
-//////////////////////////
-
 // center-all
 @mixin pf_center-all {
   @include center_template(50%, 50%, fixed);
