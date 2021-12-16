@@ -8,18 +8,17 @@
             <h2 class="title title--small sheet__title">Выберите тесто</h2>
             <div class="sheet__content dough">
               <label
-                :class="`dough__input--${dough.class}`"
                 class="dough__input"
+                :class="`dough__input--${dough.class}`"
                 v-for="(dough, index) in pizza.dough"
                 :key="dough.id"
-                :title="dough.name"
               >
                 <input
                   type="radio"
                   name="dough"
-                  :value="dough.value"
+                  :value="dough.class"
                   class="visually-hidden"
-                  :checked="index === 0"
+                  :checked="index === 1"
                 />
                 <b>{{ dough.name }}</b>
                 <span>{{ dough.description }}</span>
@@ -40,7 +39,7 @@
                 <input
                   type="radio"
                   name="diameter"
-                  value="size.value"
+                  value="size.class"
                   class="visually-hidden"
                   :checked="index === 1"
                 />
@@ -65,7 +64,7 @@
                   <input
                     type="radio"
                     name="sauce"
-                    value="sauce.value"
+                    value="sauce.class"
                     :checked="index === 0"
                   />
                   <span>{{ sauce.name }}</span>
@@ -78,9 +77,11 @@
                     class="ingredients__item"
                     v-for="ingredient in pizza.ingredients"
                     :key="ingredient.id"
-                    :title="ingredient.name"
                   >
-                    <span :class="`filling filling--${ingredient.class}`">
+                    <span
+                      class="filling"
+                      :class="`filling--${ingredient.class}`"
+                    >
                       {{ ingredient.name }}
                     </span>
                     <div class="counter counter--orange ingredients__counter">
@@ -143,16 +144,17 @@
 
 <script>
 import misc from "@/static/misc.json";
-import pizza from "@/static/pizza.json";
 import user from "@/static/user.json";
+import pizza from "@/static/pizza.json";
+import { getPizzaParametrs } from "../common/helpers";
 
 export default {
   name: "Index",
   data() {
     return {
       misc,
-      pizza,
       user,
+      pizza: getPizzaParametrs(pizza),
     };
   },
 };
