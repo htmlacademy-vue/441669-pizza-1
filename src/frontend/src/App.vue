@@ -1,23 +1,23 @@
 <template>
   <div id="app">
-    <Header />
+    <AppLayout />
     <Index />
   </div>
 </template>
 
 <script>
 import Index from "@/views/Index";
-import Header from "@/layouts/Header";
+import AppLayout from "@/layouts/AppLayout";
 
 export default {
   name: "App",
   components: {
-    Header,
+    AppLayout,
     Index,
   },
 };
 </script>
 
 <style lang="scss">
-@import "~@/assets/scss/app";
+@import "assets/scss/app";
 </style>
