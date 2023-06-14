@@ -12,13 +12,14 @@
 
             <div class="sheet__content dough">
               <label
-                v-for="({ id, classValue, name, description }) in dough"
-                :key="id"
+                v-for="dough in pizza.dough"
+                :key="dough.id"
                 class="dough__input"
-                :class="`dough__input--${classValue}`">
-                <input type="radio" name="dough" :value="classValue" class="visually-hidden" checked>
-                <b>{{ name }}</b>
-                <span>{{ description }}</span>
+                :class="`dough__input--${dough.classValue}`">
+
+                <input type="radio" name="dough" :value="dough.classValue" class="visually-hidden" checked>
+                <b>{{ dough.name }}</b>
+                <span>{{ dough.description }}</span>
               </label>
             </div>
 
@@ -32,16 +33,19 @@
 
             <div class="sheet__content diameter">
               <label
-                v-for="({id, pizzaSize, name }) in sizes"
-                :key="id"
+                v-for="size in pizza.sizes"
+                :key="size.id"
                 class="diameter__input"
-                :class="`diameter__input--${pizzaSize}`">
-                <!-- checked second element by default-->
-                <input type="radio" name="diameter" :value="pizzaSize" checked
-                       class="visually-hidden">
-                <span>{{name}}</span>
+                :class="`diameter__input--${size.classValue}`"
+              >
+                <input
+                  type="radio"
+                  name="diameter"
+                  :value="size.classValue"
+                  class="visually-hidden"
+                />
+                <span>{{ size.name }}</span>
               </label>
-
             </div>
           </div>
         </div>
@@ -57,11 +61,11 @@
 
                 <label
                   class="radio ingredients__input"
-                  v-for="({id, name, saucesName }) in sauces"
-                  :key="id"
+                  v-for="sauce in pizza.sauces"
+                  :key="sauce.id"
                 >
-                  <input type="radio" name="sauce" :value="saucesName" checked />
-                  <span>{{ name }}</span>
+                  <input type="radio" name="sauce" :value="sauce.classValue" checked />
+                  <span>{{ sauce.name }}</span>
                 </label>
               </div>
 
@@ -71,13 +75,13 @@
                 <ul class="ingredients__list">
                   <li
                     class="ingredients__item"
-                    v-for="{ id, name, ingredientName } in ingredients"
-                    :key="id"
+                    v-for="ingredient in pizza.ingredients"
+                    :key="ingredient.id"
                   >
                       <span
                         class="filling"
-                        :class="`filling--${ingredientName}`">
-                        {{name }}
+                        :class="`filling--${ingredient.classValue}`">
+                        {{ingredient.name }}
                       </span>
 
                     <div class="counter counter--orange ingredients__counter">
@@ -136,7 +140,7 @@
 import misc from "@/static/misc.json";
 import user from "@/static/user.json";
 import pizza from "@/static/pizza.json";
-import { PIZZA_PARAMETERS } from "@/common/constants.js"
+import { normalizePizza } from "@/common/helpers.js";
 
 export default {
   name: "Index",
@@ -144,34 +148,8 @@ export default {
     return {
       misc,
       user,
-      pizza
+      pizza: normalizePizza(pizza),
     };
-  },
-  computed: {
-    dough() {
-      return this.pizza.dough.map((dough) => ({
-        ...dough,
-        classValue: PIZZA_PARAMETERS.dough[dough.name]
-      }));
-    },
-    sizes() {
-      return this.pizza.sizes.map((size) => ({
-        ...size,
-        pizzaSize: PIZZA_PARAMETERS.sizes[size.name]
-      }))
-    },
-    sauces() {
-      return this.pizza.sauces.map((sauce) => ({
-        ...sauce,
-        saucesName: PIZZA_PARAMETERS.sauces[sauce.name]
-      }))
-    },
-    ingredients() {
-      return this.pizza.ingredients.map((ingredient) => ({
-        ...ingredient,
-        ingredientName: PIZZA_PARAMETERS.ingredients[ingredient.name]
-      }))
-    },
   },
   mounted() {
     console.log('ingredients', this.ingredients)
