@@ -2,7 +2,12 @@
   <header class="header">
     <div class="header__logo">
       <a href="#" class="logo">
-        <img src="@/assets/img/logo.svg" alt="V!U!E! Pizza logo" width="90" height="40">
+        <img
+          src="@/assets/img/logo.svg"
+          alt="V!U!E! Pizza logo"
+          width="90"
+          height="40"
+        />
       </a>
     </div>
     <div class="header__cart">
@@ -16,10 +21,10 @@
 
 <script>
 export default {
-  name: "Header",
+  name: "AppLayout",
 };
 </script>
 
 <style scoped>
-@import "~@/assets/scss/layout/header.scss";
+@import "../assets/scss/layout/header.scss";
 </style>
