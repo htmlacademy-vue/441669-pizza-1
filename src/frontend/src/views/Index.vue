@@ -5,47 +5,26 @@
       <div class="content__wrapper">
         <h1 class="title title--big">Конструктор пиццы</h1>
 
-        <div class="content__dough">
+        <BuilderDoughSelector
+          :doughArray="pizza.dough"
 
-          <div class="sheet">
-            <h2 class="title title--small sheet__title">Выберите тесто</h2>
+          :default-checked="selectedDough"
+          @selectDough="selectDough($event)"
 
-            <div class="sheet__content dough">
-              <label
-                v-for="dough in pizza.dough"
-                :key="dough.id"
-                class="dough__input"
-                :class="`dough__input--${dough.classValue}`">
-
-                <input type="radio" name="dough" :value="dough.classValue" class="visually-hidden" checked>
-                <b>{{ dough.name }}</b>
-                <span>{{ dough.description }}</span>
-              </label>
-            </div>
-
-          </div>
-
-        </div>
+        />
 
         <div class="content__diameter">
           <div class="sheet">
             <h2 class="title title--small sheet__title">Выберите размер</h2>
-
             <div class="sheet__content diameter">
-              <label
+              <BuilderSizeSelector
                 v-for="size in pizza.sizes"
                 :key="size.id"
-                class="diameter__input"
                 :class="`diameter__input--${size.classValue}`"
-              >
-                <input
-                  type="radio"
-                  name="diameter"
-                  :value="size.classValue"
-                  class="visually-hidden"
-                />
-                <span>{{ size.name }}</span>
-              </label>
+                :value="size.classValue"
+                :checked="size.id === 2"
+                :name="size.name"
+              />
             </div>
           </div>
         </div>
@@ -58,15 +37,13 @@
 
               <div class="ingredients__sauce">
                 <p>Основной соус:</p>
-
-                <label
-                  class="radio ingredients__input"
+                <BuilderIngredientsSelector
                   v-for="sauce in pizza.sauces"
                   :key="sauce.id"
-                >
-                  <input type="radio" name="sauce" :value="sauce.classValue" checked />
-                  <span>{{ sauce.name }}</span>
-                </label>
+                  :value="sauce.classValue"
+                  :checked="sauce.id === 1"
+                  :name="sauce.name"
+                  />
               </div>
 
               <div class="ingredients__filling">
@@ -80,7 +57,8 @@
                   >
                       <span
                         class="filling"
-                        :class="`filling--${ingredient.classValue}`">
+                        :class="`filling--${ingredient.classValue}`"
+                      >
                         {{ingredient.name }}
                       </span>
 
@@ -110,6 +88,7 @@
         </div>
 
         <div class="content__pizza">
+<!--          <BuilderPizzaView />-->
           <label class="input">
             <span class="visually-hidden">Название пиццы</span>
             <input type="text" name="pizza_name" placeholder="Введите название пиццы">
@@ -130,7 +109,6 @@
             <button type="button" class="button" disabled>Готовьте!</button>
           </div>
         </div>
-
       </div>
     </form>
   </main>
@@ -141,6 +119,10 @@ import misc from "@/static/misc.json";
 import user from "@/static/user.json";
 import pizza from "@/static/pizza.json";
 import { normalizePizza } from "@/common/helpers.js";
+import BuilderDoughSelector from "@/modules/builder/components/BuilderDoughSelector";
+import BuilderSizeSelector from "@/modules/builder/components/BuilderSizeSelector";
+import BuilderIngredientsSelector from "@/modules/builder/components/BuilderIngredientsSelector";
+// import BuilderPizzaView from "@/modules/builder/components/BuilderPizzaView";
 
 export default {
   name: "Index",
@@ -149,10 +131,29 @@ export default {
       misc,
       user,
       pizza: normalizePizza(pizza),
+      selectedDough: pizza.dough[0].classValue,
     };
   },
+  components: {
+    BuilderDoughSelector,
+    BuilderSizeSelector,
+    BuilderIngredientsSelector,
+    // BuilderPizzaView,
+  },
+  props: {
+    // dough: {
+    //   type: Array,
+    //   required: true,
+    // },
+
+  },
+  methods: {
+    selectDough(dough) {
+      this.selectedDough = dough;
+    },
+  },
   mounted() {
-    console.log('ingredients', this.ingredients)
+    console.log('selectedDough', this.pizza.dough[0].classValue);
   }
 };
 
