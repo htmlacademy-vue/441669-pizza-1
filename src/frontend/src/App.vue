@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <AppLayout
+    <AppLayout/>
+    <Index
       :dough="dough"
     />
-    <Index />
   </div>
 </template>
 

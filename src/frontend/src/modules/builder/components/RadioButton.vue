@@ -4,8 +4,8 @@
       type="radio"
       :name="name"
       :value="name"
-      :checked="isChecked"
-      @change="$emit('change', $event.target.value)"
+      :checked="true"
+      @change="change($event)"
       class="visually-hidden"
     />
     <slot></slot>
@@ -15,19 +15,21 @@
 <script>
 export default {
   name: "RadioButton",
+  data() {
+    return {
+      value: '',
+    }
+  },
   props: {
     name: {
       type: String,
       required: true
     },
-    value: {
-      type: String,
-      required: true
+  },
+  methods: {
+    change(event) {
+      this.value = event.target.value
     },
-    isChecked: {
-      type: Boolean,
-      required: true
-    }
   },
 }
 </script>

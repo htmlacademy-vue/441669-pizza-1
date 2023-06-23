@@ -8,8 +8,8 @@
         <BuilderDoughSelector
           :doughArray="pizza.dough"
 
-          :default-checked="selectedDough"
-          @selectDough="selectDough($event)"
+         @selectDough="message = $event"
+
 
         />
 
@@ -141,19 +141,14 @@ export default {
     // BuilderPizzaView,
   },
   props: {
-    // dough: {
-    //   type: Array,
-    //   required: true,
-    // },
+
 
   },
   methods: {
-    selectDough(dough) {
-      this.selectedDough = dough;
-    },
+
   },
   mounted() {
-    console.log('selectedDough', this.pizza.dough[0].classValue);
+    console.log('selectedDough', this.selectDough);
   }
 };
 

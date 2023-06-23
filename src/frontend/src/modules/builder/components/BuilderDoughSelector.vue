@@ -7,13 +7,12 @@
           v-for="dough in doughArray"
           :key="dough.id"
           :value="dough.classValue"
-          :name="dough.name"
+          name="dough"
           :description="dough.description"
           class="dough__input"
           :class="`dough__input--${dough.classValue}`"
 
-          :isChecked="value === defaultChecked"
-          @change="updateDough(value)"
+          @change="updateDough($event)"
         >
           <b>{{ dough.name }}</b>
           <span>{{ dough.description }} </span>
@@ -30,7 +29,7 @@ export default {
   name: "BuilderDoughSelector",
   data() {
     return {
-
+      message: '',
     }
   },
   components: {
@@ -41,19 +40,16 @@ export default {
       type: Array,
       required: true,
     },
-    defaultChecked: {
-      type: String,
-      required: true,
-    },
   },
 
   methods: {
-    updateDough(value) {
-      this.$emit('selectDough', value);
+    updateDough(event) {
+      this.message = event.target.value;
+      this.$emit('selectDough', this.message)
     },
   },
   mounted() {
-    console.log()
+    console.log('  this.message ',  this.message )
   }
 };
 </script>
